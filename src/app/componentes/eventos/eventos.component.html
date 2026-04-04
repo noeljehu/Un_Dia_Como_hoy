@@ -1,0 +1,171 @@
+<!-- ══════════════════════════════════════════════════
+     HUD SUPERIOR
+══════════════════════════════════════════════════ -->
+<header class="hud">
+  <div class="hud-left">
+    <div class="hud-tag">UN DÍA COMO HOY</div>
+    <div class="hud-fecha">{{ fechaHoy }}</div>
+  </div>
+  <div class="hud-center">
+    <div class="hud-logo">
+      <span class="logo-bracket">[</span>
+      <span class="logo-text">HISTORIA</span>
+      <span class="logo-bracket">]</span>
+    </div>
+  </div>
+  <div class="hud-right">
+    <div class="hud-clock">{{ horaLocal }}</div>
+    <div class="hud-events-count" *ngIf="eventos.length > 0">
+      {{ eventoActivo + 1 }}<span class="count-of"> de </span>{{ eventos.length }}
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════
+     ERROR
+══════════════════════════════════════════════════ -->
+<div *ngIf="error" class="error-panel">
+  <div class="error-code">404</div>
+  <div class="error-line"></div>
+  <p class="error-msg">{{ error }}</p>
+  <button class="btn-retry" (click)="recargar()">
+    <span>↺</span> REINTENTAR
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     LOADING
+══════════════════════════════════════════════════ -->
+<div *ngIf="cargando && eventos.length === 0" class="loading-screen">
+  <div class="loading-inner">
+    <div class="loading-year">????</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill"></div>
+      </div>
+    </div>
+    <div class="loading-steps">
+      <div class="loading-step" style="--d:0s">
+        <span class="step-dot"></span>
+        Conectando con Wikipedia
+      </div>
+      <div class="loading-step" style="--d:.5s">
+        <span class="step-dot"></span>
+        Obteniendo efemérides del día
+      </div>
+      <div class="loading-step" style="--d:1s">
+        <span class="step-dot"></span>
+        Preparando en español
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     FEED
+══════════════════════════════════════════════════ -->
+<main
+  class="feed"
+  #feedContainer
+  (scroll)="onScroll($event)"
+  *ngIf="eventos.length > 0"
+>
+  <article
+    *ngFor="let e of eventos; let i = index; trackBy: trackByIndex"
+    class="slide"
+    [class.is-active]="i === eventoActivo"
+    [attr.data-index]="i"
+  >
+    <!-- Número decorativo de fondo (año fantasma) -->
+    <div class="ghost-year" aria-hidden="true">{{ e.anio }}</div>
+
+    <!-- Línea vertical decorativa izquierda -->
+    <div class="slide-rail">
+      <div class="rail-line"></div>
+      <div class="rail-dot"></div>
+      <div class="rail-index">{{ String(i + 1).padStart(2, '0') }}</div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="slide-body" [class.animate-in]="i === eventoActivo">
+
+      <!-- Año principal -->
+      <div class="year-block">
+        <div class="year-eyebrow">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text">AÑO</span>
+        </div>
+        <h1 class="year-number">{{ e.anio }}</h1>
+        <div class="year-underline"></div>
+      </div>
+
+      <!-- Separador con ícono -->
+      <div class="divider">
+        <span class="divider-dot">◆</span>
+      </div>
+
+      <!-- Descripción -->
+      <div class="desc-block">
+        <p class="desc-text">{{ e.titulo }}</p>
+      </div>
+
+      <!-- CTA -->
+      <a
+        *ngIf="e.link"
+        [href]="e.link"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cta-link"
+      >
+        <span class="cta-inner">
+          <span class="cta-label">Leer en Wikipedia</span>
+          <span class="cta-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </span>
+        <span class="cta-bg"></span>
+      </a>
+
+    </div>
+
+    <!-- Scan lines overlay -->
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Viñeta de esquina decorativa -->
+    <div class="corner-tl" aria-hidden="true"></div>
+    <div class="corner-br" aria-hidden="true"></div>
+
+  </article>
+
+  <!-- Spinner de carga de más eventos -->
+  <div *ngIf="cargandoMas" class="loading-more">
+    <div class="loading-more-dot"></div>
+    <div class="loading-more-dot" style="animation-delay:.2s"></div>
+    <div class="loading-more-dot" style="animation-delay:.4s"></div>
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════
+     NAVEGACIÓN LATERAL (dots)
+══════════════════════════════════════════════════ -->
+<nav class="side-nav" *ngIf="eventos.length > 0" aria-label="Navegar eventos">
+  <button
+    *ngFor="let e of eventos; let i = index"
+    class="nav-dot"
+    [class.nav-dot--active]="i === eventoActivo"
+    [attr.aria-label]="'Evento ' + (i + 1)"
+    (click)="irASlide(i)"
+  ></button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════
+     HINT SCROLL (solo al inicio)
+══════════════════════════════════════════════════ -->
+<div class="scroll-hint" [class.scroll-hint--hidden]="eventoActivo > 0" aria-hidden="true">
+  <div class="hint-mouse">
+    <div class="hint-wheel"></div>
+  </div>
+  <span class="hint-label">DESLIZA</span>
+</div>
