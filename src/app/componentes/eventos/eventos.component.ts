@@ -8,13 +8,13 @@ import {
   ChangeDetectorRef,
   NgZone
 } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { EventosService, Evento } from '../../servicios/eventos.service';
 
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf , CommonModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
