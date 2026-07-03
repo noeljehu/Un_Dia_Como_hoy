@@ -1,59 +1,60 @@
-# HoyEnLaHistoria
+# 📅 Un Día Como Hoy (HoyEnLaHistoria)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.17.
+Aplicación web que muestra eventos históricos ocurridos en el día actual, con un formato de scroll infinito. Consume la API pública **Wikipedia On This Day** para obtener los datos en tiempo real.
 
-## Development server
+🔗 **Demo en vivo:** [un-dia-como-hoy.vercel.app](https://un-dia-como-hoy.vercel.app/)
 
-To start a local development server, run:
+## ✨ Características
+
+- Listado de eventos históricos correspondientes a la fecha actual, obtenidos dinámicamente desde la API de Wikipedia.
+- Scroll infinito para cargar más eventos sin recargar la página.
+- Interfaz construida con componentes reutilizables de Angular.
+- Consumo de servicios HTTP y manejo de datos asíncronos.
+- Aplicación desplegada en producción mediante Vercel.
+
+## 🛠️ Tecnologías utilizadas
+
+- **Angular** (CLI 19.2.17)
+- **TypeScript**
+- **Wikipedia On This Day API** (API pública)
+- **Vercel** (despliegue)
+
+## 🚀 Cómo ejecutar el proyecto localmente
+
+Clona el repositorio e instala las dependencias:
+
+```bash
+git clone https://github.com/noeljehu/HoyEnLaHistoria.git
+cd HoyEnLaHistoria
+npm install
+```
+
+Levanta el servidor de desarrollo:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abre tu navegador en `http://localhost:4200/`. La aplicación se recarga automáticamente al modificar el código fuente.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## 📦 Build de producción
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los artefactos de compilación se generan en el directorio `dist/`, optimizados para rendimiento.
 
-## Running unit tests
+## 🧪 Tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Pruebas unitarias con Karma:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## 👤 Autor
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Jehu Noel Ayllon Vargas**
+Desarrollador Backend Junior (Java / Spring Boot) · Frontend (Angular)
+[GitHub](https://github.com/noeljehu) · [LinkedIn](https://linkedin.com/in/noel-ayllon)
